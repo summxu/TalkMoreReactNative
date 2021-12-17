@@ -7,9 +7,9 @@ import Paragraph from './components/Paragraph'
 
 export default function StartScreen({ navigation }) {
   return (
-    <Background>
+    <Background navigation={navigation}>
       <Logo />
-      <Header>Talk More</Header>
+      <Header>TalkMore</Header>
       <Paragraph>
         The easiest way to start with your amazing application.
       </Paragraph>

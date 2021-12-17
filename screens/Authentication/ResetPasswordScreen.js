@@ -20,8 +20,7 @@ export default function ResetPasswordScreen({ navigation }) {
   }
 
   return (
-    <Background>
-      <BackButton goBack={navigation.goBack} />
+    <Background navigation={navigation}>
       <Logo />
       <Header>Restore Password</Header>
       <TextInput

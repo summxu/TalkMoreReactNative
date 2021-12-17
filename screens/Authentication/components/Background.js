@@ -1,17 +1,33 @@
-import React from 'react'
-import { ImageBackground, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { theme } from '@/colors/theme'
+import React, { useState, useEffect } from 'react'
+import { ImageBackground, StyleSheet, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import BackButton from "./BackButton";
 
-export default function Background({ children }) {
+export default function Background ({ children, navigation }) {
+
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const setIndexHandle = () => {
+      const { index } = navigation.getState()
+      setIndex(index)
+    }
+    setIndexHandle()
+  }, [])
+
   return (
     <ImageBackground
       source={require('../assets/background_dot.png')}
       resizeMode="repeat"
       style={styles.background}
     >
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        {children}
-      </KeyboardAvoidingView>
+      <KeyboardAwareScrollView >
+        {!!index && <BackButton goBack={navigation.goBack} />}
+        <View style={styles.container}>
+          {children}
+        </View>
+      </KeyboardAwareScrollView>
     </ImageBackground>
   )
 }
@@ -24,11 +40,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
-    width: '100%',
-    maxWidth: 340,
-    alignSelf: 'center',
-    alignItems: 'center',
+    marginTop: 100,
     justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
 })

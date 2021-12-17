@@ -8,6 +8,9 @@ import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { Provider } from "mobx-react";
 import RootStore from "@/stores";
+import { Provider as PaperProvider } from 'react-native-paper';
+import { theme } from "@/colors/theme";
+import Toast from "@/components/Toast";
 
 function App() {
   const isLoadingComplete = useCachedResources();
@@ -18,12 +21,14 @@ function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Provider {...new RootStore()}>
-          <ActionSheetProvider>
-            <Navigation colorScheme={"light"} />
-          </ActionSheetProvider>
-          <StatusBar />
-        </Provider>
+        <PaperProvider theme={theme}>
+          <Provider {...new RootStore()}>
+            <ActionSheetProvider>
+              <Navigation colorScheme={"light"} />
+            </ActionSheetProvider>
+            <StatusBar />
+          </Provider>
+        </PaperProvider>
       </SafeAreaProvider>
     );
   }

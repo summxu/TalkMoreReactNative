@@ -22,7 +22,7 @@ import SettingsScreen from "../screens/Settings";
 import { AuthParamList, BottomTabParamList, RootStackParamList } from "../types";
 
 interface NavigationProps {
-  userStore: UserStore
+  userStore?: UserStore
 }
 
 const Navigation = ({

@@ -10,10 +10,24 @@ import BackButton from './components/BackButton'
 import { theme } from '@/colors/theme'
 import { emailValidator } from './helpers/emailValidator'
 import { passwordValidator } from './helpers/passwordValidator'
-
-export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState({ value: '', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
+import { inject, observer } from "mobx-react";
+const LoginScreen = ({ navigation, talkMoreStore }) => {
+  const [email, setEmail] = useState({ value: 'chenxu4012@foxmail.com', error: '' })
+  const [password, setPassword] = useState({ value: '123123', error: '' })
+  const [loding, setLoding] = useState(false)
+  const initTalkMoreSDK = async () => {
+    try {
+      setLoding(true)
+      const res = await talkMoreStore.initTalkMoreSDK({
+        username: email,
+        password: password
+      })
+    } catch (error) {
+      console.log(global.$Toast)
+      console.log(error)
+    }
+      setLoding(false)
+  }
 
   const onLoginPressed = () => {
     const emailError = emailValidator(email.value)
@@ -23,19 +37,15 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
+    initTalkMoreSDK()
   }
 
   return (
-    <Background>
-      <BackButton goBack={navigation.goBack} />
+    <Background navigation={navigation}>
       <Logo />
-      <Header>Welcome back.</Header>
+      <Header>登录 TalkMore</Header>
       <TextInput
-        label="Email"
+        label="电子邮箱"
         returnKeyType="next"
         value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: '' })}
@@ -47,7 +57,7 @@ export default function LoginScreen({ navigation }) {
         keyboardType="email-address"
       />
       <TextInput
-        label="Password"
+        label="登录密码"
         returnKeyType="done"
         value={password.value}
         onChangeText={(text) => setPassword({ value: text, error: '' })}
@@ -59,16 +69,16 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity
           onPress={() => navigation.navigate('ResetPasswordScreen')}
         >
-          <Text style={styles.forgot}>Forgot your password?</Text>
+          <Text style={styles.forgot}>忘记密码？</Text>
         </TouchableOpacity>
       </View>
-      <Button mode="contained" onPress={onLoginPressed}>
-        Login
+      <Button loding={loding} mode="contained" onPress={onLoginPressed}>
+        登 录
       </Button>
       <View style={styles.row}>
-        <Text>Don’t have an account? </Text>
+        <Text>还没有账户? </Text>
         <TouchableOpacity onPress={() => navigation.replace('RegisterScreen')}>
-          <Text style={styles.link}>Sign up</Text>
+          <Text style={styles.link}>注册</Text>
         </TouchableOpacity>
       </View>
     </Background>
@@ -94,3 +104,5 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
 })
+
+export default inject('talkMoreStore')(observer(LoginScreen))

@@ -6,7 +6,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "debuger-fix": "node scripts/debuger-fix.js",
+    "product-fix": "node scripts/product-fix.js",
+    "adb": "adb connect 127.0.0.1:62001 && adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081"
   },
   "jest": {
     "preset": "jest-expo"
@@ -45,6 +48,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-emoji-selector": "^0.2.0",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-paper": "^4.11.1",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
