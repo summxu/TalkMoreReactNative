@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-16 19:34:40
+ * @LastEditTime: 2021-12-17 09:43:38
  * @Msg: Nothing
  */
 import { observable, action } from "mobx";
@@ -26,9 +26,9 @@ class TalkMoreStore {
     if (res.config.apiKey) {
       this.setTalkmMore(res)
       this.rootStore.userStore.setInfo(res.config)
-      Promise.resolve(res.config.reslut)
+      Promise.resolve(res.reslut)
     } else {
-      Promise.reject(res.config.reslut)
+      Promise.reject(res.reslut)
     }
   }
 

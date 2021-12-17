@@ -1,8 +1,12 @@
-import talkMore from "@/lib/index.js";
+import RootStore from "@/stores";
+import TalkMoreStore from "@/stores/talkMore";
+import { BottomTabParamList, RootStackParamList } from "@/types";
+import { NavigationContainerProps, NavigationProp } from "@react-navigation/native";
+import { StackScreenProps } from "@react-navigation/stack";
+import { inject, observer } from "mobx-react";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ChatRoom } from "../src/models";
-import { observer, inject } from "mobx-react";
 
 const styles = StyleSheet.create({
   page: {
@@ -11,13 +15,16 @@ const styles = StyleSheet.create({
   },
 });
 
-const TabOneScreen = (props: any) => {
+interface HomeProps {
+  talkMoreStore: TalkMoreStore
+}
+
+const HomeScreen: React.FC<StackScreenProps<RootStackParamList> & HomeProps> = ({ talkMoreStore }) => {
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
-  const { talkMoreStore } = props
 
   useEffect(() => {
     const initTalkMoreSDK = async () => {
-     const res = await talkMoreStore.initTalkMoreSDK({
+      const res = await talkMoreStore.initTalkMoreSDK({
         username: 'chenxu4012@foxmail.com',
         password: '123123'
       })
@@ -32,4 +39,4 @@ const TabOneScreen = (props: any) => {
   );
 }
 
-export default inject('talkMoreStore')(observer(TabOneScreen))
+export default inject('talkMoreStore')(observer(HomeScreen))

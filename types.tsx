@@ -12,6 +12,14 @@ export type RootStackParamList = {
   UsersScreen: undefined;
 };
 
+export type AuthParamList = {
+  StartScreen: undefined;
+  LoginScreen: undefined;
+  RegisterScreen: undefined;
+  Dashboard: undefined;
+  ResetPasswordScreen: undefined;
+};
+
 export type BottomTabParamList = {
   Home: undefined;
   Settings: undefined;

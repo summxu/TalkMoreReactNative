@@ -3,48 +3,39 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+import { Dashboard, LoginScreen, RegisterScreen, ResetPasswordScreen, StartScreen } from "@/screens/Authentication";
+import UserStore from "@/stores/user";
+import { Feather } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
-  NavigationContainer,
-  DefaultTheme,
-  DarkTheme,
-  useNavigation,
+  DarkTheme, DefaultTheme, NavigationContainer, useNavigation
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { inject, observer } from "mobx-react";
 import * as React from "react";
 import {
-  ColorSchemeName,
-  View,
-  Text,
-  Image,
-  useWindowDimensions,
-  Pressable,
+  ColorSchemeName, Image, Pressable, Text, useWindowDimensions, View
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-
-import NotFoundScreen from "../screens/NotFoundScreen";
-import { BottomTabParamList, RootStackParamList } from "../types";
-import LinkingConfiguration from "./LinkingConfiguration";
-
-import ChatRoomScreen from "../screens/ChatRoomScreen";
 import HomeScreen from "../screens/HomeScreen";
-import UsersScreen from "../screens/UsersScreen";
+import NotFoundScreen from "../screens/NotFoundScreen";
 import SettingsScreen from "../screens/Settings";
+import { AuthParamList, BottomTabParamList, RootStackParamList } from "../types";
 
-import ChatRoomHeader from "./ChatRoomHeader";
-import GroupInfoScreen from "../screens/GroupInfoScreen";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+interface NavigationProps {
+  userStore: UserStore
+}
 
-export default function Navigation({
+const Navigation = ({
   colorScheme,
+  userStore
 }: {
   colorScheme: ColorSchemeName;
-}) {
+} & NavigationProps) => {
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator />
+      <RootNavigator info={userStore.info} />
     </NavigationContainer>
   );
 }
@@ -52,41 +43,46 @@ export default function Navigation({
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
+const Auth = createStackNavigator<AuthParamList>();
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
-function RootNavigator() {
+
+function RootNavigator({ info }: Partial<UserStore>) {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="BottomTab"
-        component={BottomTabNavigator}
-        options={{ headerTitle: HomeHeader }}
-      />
-      <Stack.Screen
-        name="ChatRoom"
-        component={ChatRoomScreen}
-        options={({ route }) => ({
-          headerTitle: () => <ChatRoomHeader id={route.params?.id} />,
-          headerBackTitleVisible: false,
-        })}
-      />
-      <Stack.Screen name="GroupInfoScreen" component={GroupInfoScreen} />
-      <Stack.Screen
-        name="UsersScreen"
-        component={UsersScreen}
-        options={{
-          title: "Users",
-        }}
-      />
-
-
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
-    </Stack.Navigator>
+    !(info && info.apiKey) ? <AuthNavigator /> :
+      <Stack.Navigator>
+        <Stack.Screen
+          name="BottomTab"
+          component={BottomTabNavigator}
+          options={{ headerTitle: HomeHeader }}
+        />
+        <Stack.Screen
+          name="NotFound"
+          component={NotFoundScreen}
+          options={{ title: "Oops!" }}
+        />
+      </Stack.Navigator>
   );
 }
+
+function AuthNavigator() {
+  return (
+    <Auth.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Auth.Screen name="StartScreen" component={StartScreen} />
+      <Auth.Screen name="LoginScreen" component={LoginScreen} />
+      <Auth.Screen name="RegisterScreen" component={RegisterScreen} />
+      <Auth.Screen name="Dashboard" component={Dashboard} />
+      <Auth.Screen
+        name="ResetPasswordScreen"
+        component={ResetPasswordScreen}
+      />
+    </Auth.Navigator>
+  )
+}
+
 function BottomTabNavigator() {
   return (
     <BottomTab.Navigator>
@@ -145,3 +141,5 @@ const HomeHeader = (props: any) => {
     </View>
   );
 };
+
+export default inject('userStore')(observer(Navigation))

@@ -1,13 +1,13 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-16 19:33:36
+ * @LastEditTime: 2021-12-17 10:59:56
  * @Msg: Nothing
  */
 import { action, observable } from "mobx";
 import RootStore from "./index";
 
-type infoType = {
+export type infoType = {
   apiKey: any
   apiURL: any
   password: any
