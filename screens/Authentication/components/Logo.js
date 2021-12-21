@@ -1,14 +1,14 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-17 10:06:37
- * @LastEditTime: 2021-12-17 12:40:42
+ * @LastEditTime: 2021-12-21 20:17:09
  * @Msg: Nothing
  */
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 
-export default function Logo() {
-  return <Image source={require('../assets/logo.png')} style={styles.image} />
+export default function Logo (props) {
+  return <Image source={{ uri: props.uri }} style={styles.image} />
 }
 
 const styles = StyleSheet.create({

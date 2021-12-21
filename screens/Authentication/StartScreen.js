@@ -1,19 +1,30 @@
 import { inject, observer } from 'mobx-react'
 import React from 'react'
+import { StyleSheet } from 'react-native'
+import HTMLView from 'react-native-htmlview'
 import Background from './components/Background'
 import Button from './components/Button'
 import Header from './components/Header'
 import Logo from './components/Logo'
 import Paragraph from './components/Paragraph'
 
-const StartScreen = ({ navigation }) => {
+const styles = StyleSheet.create({
+  p: {
+    lineHeight: 25,
+    textAlign: 'center',
+    fontSize: 16
+  }
+})
 
+const StartScreen = ({ navigation, talkMoreStore }) => {
+  const { serverInfo } = talkMoreStore
+  console.log(serverInfo)
   return (
     <Background navigation={navigation}>
-      <Logo />
-      <Header>多 嘴</Header>
+      <Logo uri={serverInfo.realm_icon} />
+      <Header>{serverInfo.realm_name}</Header>
       <Paragraph>
-        可以完全控制和信任的通信平台，使团队能够实时聊天、文件共享和视频通话进行协作。
+        <HTMLView stylesheet={styles} value={serverInfo.realm_description} />
       </Paragraph>
       <Button
         mode="contained"
@@ -32,4 +43,4 @@ const StartScreen = ({ navigation }) => {
   )
 }
 
-export default StartScreen
+export default inject('talkMoreStore')(observer(StartScreen))
