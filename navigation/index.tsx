@@ -26,16 +26,16 @@ interface NavigationProps {
 }
 
 const Navigation = ({
-  colorScheme,
-  userStore
+  colorScheme
 }: {
   colorScheme: ColorSchemeName;
-} & NavigationProps) => {
+}) => {
+
   return (
     <NavigationContainer
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <RootNavigator info={userStore.info} />
+      <RootNavigatorMobx />
     </NavigationContainer>
   );
 }
@@ -46,9 +46,10 @@ const Stack = createStackNavigator<RootStackParamList>();
 const Auth = createStackNavigator<AuthParamList>();
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-function RootNavigator({ info }: Partial<UserStore>) {
+function RootNavigator({ userStore }: NavigationProps) {
+  const userConf = userStore?.userConf
   return (
-    !(info && info.apiKey) ? <AuthNavigator /> :
+    !(userConf && userConf.apiKey) ? <AuthNavigator /> :
       <Stack.Navigator>
         <Stack.Screen
           name="BottomTab"
@@ -63,6 +64,8 @@ function RootNavigator({ info }: Partial<UserStore>) {
       </Stack.Navigator>
   );
 }
+
+const RootNavigatorMobx = inject('userStore')(observer(RootNavigator))
 
 function AuthNavigator() {
   return (
@@ -106,12 +109,6 @@ const HomeHeader = (props: any) => {
         alignItems: "center",
       }}
     >
-      <Image
-        source={{
-          uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/vadim.jpg",
-        }}
-        style={{ width: 30, height: 30, borderRadius: 30 }}
-      />
       <Text
         style={{
           flex: 1,
@@ -120,7 +117,7 @@ const HomeHeader = (props: any) => {
           fontWeight: "bold",
         }}
       >
-        Signal
+        多嘴
       </Text>
       <Pressable onPress={() => navigation.navigate("Settings")}>
         <Feather
@@ -142,4 +139,4 @@ const HomeHeader = (props: any) => {
   );
 };
 
-export default inject('userStore')(observer(Navigation))
+export default Navigation

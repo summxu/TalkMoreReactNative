@@ -7,7 +7,7 @@ import TextInput from './components/TextInput'
 import Button from './components/Button'
 import { emailValidator } from './helpers/emailValidator'
 
-export default function ResetPasswordScreen({ navigation }) {
+export default function ResetPasswordScreen ({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
 
   const sendResetPasswordEmail = () => {
@@ -22,9 +22,9 @@ export default function ResetPasswordScreen({ navigation }) {
   return (
     <Background navigation={navigation}>
       <Logo />
-      <Header>Restore Password</Header>
+      <Header>重置密码</Header>
       <TextInput
-        label="E-mail address"
+        label="电子邮箱"
         returnKeyType="done"
         value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: '' })}
@@ -34,14 +34,15 @@ export default function ResetPasswordScreen({ navigation }) {
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
-        description="You will receive email with password reset link."
+        description="您将收到带有密码重置链接的电子邮件."
       />
       <Button
+        textColor="white"
         mode="contained"
         onPress={sendResetPasswordEmail}
         style={{ marginTop: 16 }}
       >
-        Send Instructions
+        发送验证邮件
       </Button>
     </Background>
   )

@@ -1,13 +1,15 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-17 10:59:56
+ * @LastEditTime: 2021-12-21 14:16:15
  * @Msg: Nothing
  */
-import { action, observable } from "mobx";
+import { action, makeAutoObservable } from "mobx";
+import { clearPersistedStore, makePersistable } from "mobx-persist-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import RootStore from "./index";
 
-export type infoType = {
+export type userConfType = {
   apiKey: any
   apiURL: any
   password: any
@@ -17,16 +19,27 @@ export type infoType = {
 }
 
 class UserStore {
-
   rootStore: RootStore
-  @observable info: infoType | null = null
+
+  userConf: userConfType | null = null
 
   constructor(rootStore: RootStore) {
+    makeAutoObservable(this, {}, { autoBind: true });
+    makePersistable(this, {
+      name: "UserStore",
+      properties: ["userConf"],
+      storage: AsyncStorage
+    })
     this.rootStore = rootStore
   }
 
-  @action.bound setInfo(payload: any) {
-    this.info = payload
+  setUserConf(payload: any) {
+    this.userConf = payload
+  }
+
+  clean() {
+    this.userConf = null
+    clearPersistedStore(this);
   }
 }
 

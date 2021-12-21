@@ -1,32 +1,36 @@
+import { theme } from '@/colors/theme'
+import { inject, observer } from "mobx-react"
 import React, { useState } from 'react'
-import { TouchableOpacity, StyleSheet, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from './components/Background'
-import Logo from './components/Logo'
-import Header from './components/Header'
 import Button from './components/Button'
+import Header from './components/Header'
+import Logo from './components/Logo'
 import TextInput from './components/TextInput'
-import BackButton from './components/BackButton'
-import { theme } from '@/colors/theme'
 import { emailValidator } from './helpers/emailValidator'
 import { passwordValidator } from './helpers/passwordValidator'
-import { inject, observer } from "mobx-react";
+import Toast from 'react-native-root-toast';
+
 const LoginScreen = ({ navigation, talkMoreStore }) => {
   const [email, setEmail] = useState({ value: 'chenxu4012@foxmail.com', error: '' })
-  const [password, setPassword] = useState({ value: '123123', error: '' })
-  const [loding, setLoding] = useState(false)
+  const [password, setPassword] = useState({ value: '', error: '' })
+  const [loading, setLoading] = useState(false)
+
   const initTalkMoreSDK = async () => {
+    setLoading(true)
     try {
-      setLoding(true)
-      const res = await talkMoreStore.initTalkMoreSDK({
-        username: email,
-        password: password
+      await talkMoreStore.initTalkMoreSDK({
+        username: email.value,
+        password: password.value
       })
     } catch (error) {
-      console.log(global.$Toast)
-      console.log(error)
+      Toast.show(error.message, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.CENTER,
+      });
     }
-      setLoding(false)
+    setLoading(false)
   }
 
   const onLoginPressed = () => {
@@ -72,8 +76,10 @@ const LoginScreen = ({ navigation, talkMoreStore }) => {
           <Text style={styles.forgot}>忘记密码？</Text>
         </TouchableOpacity>
       </View>
-      <Button loding={loding} mode="contained" onPress={onLoginPressed}>
-        登 录
+      <Button
+        textColor="white"
+        disabled={loading} loading={loading} mode="contained" onPress={onLoginPressed}>
+        登录
       </Button>
       <View style={styles.row}>
         <Text>还没有账户? </Text>

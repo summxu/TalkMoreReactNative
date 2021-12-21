@@ -10,7 +10,7 @@ import { Provider } from "mobx-react";
 import RootStore from "@/stores";
 import { Provider as PaperProvider } from 'react-native-paper';
 import { theme } from "@/colors/theme";
-import Toast from "@/components/Toast";
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 function App() {
   const isLoadingComplete = useCachedResources();
@@ -24,7 +24,9 @@ function App() {
         <PaperProvider theme={theme}>
           <Provider {...new RootStore()}>
             <ActionSheetProvider>
-              <Navigation colorScheme={"light"} />
+              <RootSiblingParent>
+                <Navigation colorScheme={"light"} />
+              </RootSiblingParent>
             </ActionSheetProvider>
             <StatusBar />
           </Provider>

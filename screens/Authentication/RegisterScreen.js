@@ -1,16 +1,15 @@
+import { theme } from '@/colors/theme'
 import React, { useState } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from './components/Background'
-import Logo from './components/Logo'
-import Header from './components/Header'
 import Button from './components/Button'
+import Header from './components/Header'
+import Logo from './components/Logo'
 import TextInput from './components/TextInput'
-import BackButton from './components/BackButton'
-import { theme } from '@/colors/theme'
 import { emailValidator } from './helpers/emailValidator'
-import { passwordValidator } from './helpers/passwordValidator'
 import { nameValidator } from './helpers/nameValidator'
+import { passwordValidator } from './helpers/passwordValidator'
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
@@ -36,7 +35,7 @@ export default function RegisterScreen({ navigation }) {
   return (
     <Background navigation={navigation}>
       <Logo />
-      <Header>Create Account</Header>
+      <Header>注册 TalkMore</Header>
       {/* <TextInput
         label="Name"
         returnKeyType="next"
@@ -68,15 +67,16 @@ export default function RegisterScreen({ navigation }) {
       />
       <Button
         mode="contained"
+        textColor="white"
         onPress={onSignUpPressed}
         style={{ marginTop: 24 }}
       >
-        登 录
+        注册
       </Button>
       <View style={styles.row}>
         <Text>已有账户? </Text>
         <TouchableOpacity onPress={() => navigation.replace('LoginScreen')}>
-          <Text style={styles.link}>Login</Text>
+          <Text style={styles.link}>登录</Text>
         </TouchableOpacity>
       </View>
     </Background>

@@ -1,39 +1,53 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-17 17:15:08
+ * @LastEditTime: 2021-12-21 14:15:17
  * @Msg: Nothing
  */
-import { observable, action } from "mobx";
-import RootStore from "./index";
 import TalkMore from "@/lib/index.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { makeAutoObservable } from "mobx";
+import { clearPersistedStore, makePersistable } from 'mobx-persist-store';
+import RootStore from "./index";
 
 class TalkMoreStore {
-
   rootStore: RootStore
-  @observable talkmMore = null
+
+  talkmMore = null
 
   constructor(rootStore: RootStore) {
+    makeAutoObservable(this, {}, { autoBind: true });
+    makePersistable(this, {
+      name: "UserStore",
+      properties: ["talkmMore"],
+      storage: AsyncStorage
+    })
     this.rootStore = rootStore
   }
 
-  @action.bound async initTalkMoreSDK(config: any) {
+  async initTalkMoreSDK(options: any) {
     const res = await TalkMore({
-      ...config,
+      ...options,
       realm: "https://boomxu.zulipchat.com"
     })
-    console.log(res)
+    console.log(options, res.reslut)
     if (res.config.apiKey) {
       this.setTalkmMore(res)
-      this.rootStore.userStore.setInfo(res.config)
-      Promise.resolve(res.reslut)
+      setTimeout(() => {
+        this.rootStore.userStore.setUserConf(res.config)
+      }, 0);
     } else {
-      Promise.reject(res.reslut)
+      throw new Error(res.reslut.msg);
     }
   }
 
-  @action.bound setTalkmMore(talkMore: any) {
+  setTalkmMore(talkMore: any) {
     this.talkmMore = talkMore
+  }
+
+  clean() {
+    this.talkmMore = null
+    clearPersistedStore(this);
   }
 
 }

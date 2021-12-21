@@ -8443,6 +8443,11 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+mobx-persist-store@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/mobx-persist-store/-/mobx-persist-store-1.0.4.tgz#233f0c03a708c0f58948c5ff223aa59610a2711a"
+  integrity sha512-zxYvRSGKIJG/2brJC8+u6rJOnhe6HvvIOSaPSoOKdRFw4R91EV+e8PsraiScH3STNkGQlArbjnAUpd7cga1VCA==
+
 mobx-react-lite@^3.2.0:
   version "3.2.2"
   resolved "https://registry.npmjs.org/mobx-react-lite/-/mobx-react-lite-3.2.2.tgz#cee5f09e6b0e4d2705d87276baf1de74d997fa33"
@@ -9163,7 +9168,7 @@ prompts@^2.0.1, prompts@^2.2.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9340,6 +9345,19 @@ react-native-reanimated@~2.2.0:
     fbjs "^3.0.0"
     mockdate "^3.0.2"
     string-hash-64 "^1.0.3"
+
+react-native-root-siblings@^4.0.0:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/react-native-root-siblings/-/react-native-root-siblings-4.1.1.tgz#b7742db7634a87f507eb99a5fd699c4f10c46ab0"
+  integrity sha512-sdmLElNs5PDWqmZmj4/aNH4anyxreaPm61c4ZkRiR8SO/GzLg6KjAbb0e17RmMdnBdD0AIQbS38h/l55YKN4ZA==
+
+react-native-root-toast@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.npmjs.org/react-native-root-toast/-/react-native-root-toast-3.3.0.tgz#526aaf0ac48f584fb851d5e82855edfe585930ce"
+  integrity sha512-C4Pqu+Ae7kXsYJwTvz8NshyJ9SL5YJd+/vCkvgDAxxR8AYlPFggEcTCMNARIWXuRwthLbuwcakh4z9k6qg95dg==
+  dependencies:
+    prop-types "^15.5.10"
+    react-native-root-siblings "^4.0.0"
 
 react-native-safe-area-context@3.2.0:
   version "3.2.0"

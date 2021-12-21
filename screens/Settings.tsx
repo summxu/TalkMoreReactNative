@@ -4,13 +4,14 @@ import { View, Text, Pressable, Alert } from "react-native";
 import { generateKeyPair } from "../utils/crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { User as UserModel } from "../src/models";
+import { inject, observer } from "mobx-react";
 
 export const PRIVATE_KEY = "PRIVATE_KEY";
 
-const Settings = () => {
+const Settings = (props: any) => {
+
   const logOut = async () => {
-    await DataStore.clear();
-    Auth.signOut();
+    props.userStore.rootStore.logOut()
   };
 
   const updateKeyPair = async () => {
@@ -75,4 +76,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default inject('userStore')(observer(Settings))
