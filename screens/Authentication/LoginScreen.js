@@ -14,7 +14,7 @@ import Toast from 'react-native-root-toast';
 
 const LoginScreen = ({ navigation, talkMoreStore }) => {
   const [email, setEmail] = useState({ value: 'chenxu4012@foxmail.com', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
+  const [password, setPassword] = useState({ value: '123123.', error: '' })
   const [loading, setLoading] = useState(false)
 
   const initTalkMoreSDK = async () => {

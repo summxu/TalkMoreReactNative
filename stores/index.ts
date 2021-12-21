@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:28:17
- * @LastEditTime: 2021-12-21 14:13:59
+ * @LastEditTime: 2021-12-21 18:18:25
  * @Msg: Nothing
  */
 import UserStore from "./user";
@@ -21,7 +21,7 @@ class RootStore {
 
   logOut() {
     this.userStore.clean()
-    this.userStore.clean()
+    this.talkMoreStore.clean()
   }
 }
 
