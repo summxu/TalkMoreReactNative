@@ -1,15 +1,15 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-21 19:07:26
+ * @LastEditTime: 2021-12-21 19:08:39
  * @Msg: Nothing
  */
 import TalkMore from "@/lib/index.js";
+import TalkmoreRC from "@/talkmorerc";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { action, makeAutoObservable } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { clearPersistedStore, makePersistable } from 'mobx-persist-store';
 import RootStore from "./index";
-import TalkmoreRC from "@/talkmorerc";
 
 class TalkMoreStore {
   rootStore: RootStore
@@ -33,7 +33,7 @@ class TalkMoreStore {
 
   async getServerInfo(sdkData: any) {
     const serverRes = await sdkData.server.settings()
-    console.log(serverRes)
+    this.setServerInfo(serverRes)
   }
 
   async initTalkMoreSDK(options: any) {
