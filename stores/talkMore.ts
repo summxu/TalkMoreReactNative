@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-21 19:08:39
+ * @LastEditTime: 2021-12-22 09:51:04
  * @Msg: Nothing
  */
 import TalkMore from "@/lib/index.js";
@@ -24,7 +24,7 @@ class TalkMoreStore {
       properties: ["talkmMore", "serverInfo"],
       storage: AsyncStorage
     }).then(action => {
-      if (!this.talkmMore && !this.serverInfo) {
+      if (!this.serverInfo) {
         this.initTalkMoreSDK({})
       }
     })

@@ -10,11 +10,13 @@ import TextInput from './components/TextInput'
 import { emailValidator } from './helpers/emailValidator'
 import { nameValidator } from './helpers/nameValidator'
 import { passwordValidator } from './helpers/passwordValidator'
+import { inject, observer } from "mobx-react";
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation, talkMoreStore }) => {
   const [name, setName] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
+  const { serverInfo } = talkMoreStore
 
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value)
@@ -35,7 +37,7 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <Background navigation={navigation}>
       <Logo />
-      <Header>注册 TalkMore</Header>
+      <Header>注册 {serverInfo && serverInfo.realm_name}</Header>
       {/* <TextInput
         label="Name"
         returnKeyType="next"
@@ -94,4 +96,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default RegisterScreen
+export default inject('talkMoreStore')(observer(RegisterScreen))

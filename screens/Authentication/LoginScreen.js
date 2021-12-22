@@ -16,6 +16,7 @@ const LoginScreen = ({ navigation, talkMoreStore }) => {
   const [email, setEmail] = useState({ value: 'chenxu4012@foxmail.com', error: '' })
   const [password, setPassword] = useState({ value: '123123.', error: '' })
   const [loading, setLoading] = useState(false)
+  const { serverInfo } = talkMoreStore
 
   const initTalkMoreSDK = async () => {
     setLoading(true)
@@ -47,7 +48,7 @@ const LoginScreen = ({ navigation, talkMoreStore }) => {
   return (
     <Background navigation={navigation}>
       <Logo />
-      <Header>登录 TalkMore</Header>
+      <Header>登录 {serverInfo && serverInfo.realm_name}</Header>
       <TextInput
         label="电子邮箱"
         returnKeyType="next"
