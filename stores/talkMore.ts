@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-22 09:51:04
+ * @LastEditTime: 2021-12-22 12:14:22
  * @Msg: Nothing
  */
 import TalkMore from "@/lib/index.js";
@@ -11,17 +11,35 @@ import { makeAutoObservable } from "mobx";
 import { clearPersistedStore, makePersistable } from 'mobx-persist-store';
 import RootStore from "./index";
 
+interface talkMoreType {
+  reslut: Object | null
+  config: Object
+  callEndpoint: any
+  accounts: any
+  streams: any
+  messages: any
+  queues: any
+  events: any
+  users: any
+  emojis: any
+  typing: any
+  reactions: any
+  server: any
+  filters: any
+  callOnEachEvent: any
+}
+
 class TalkMoreStore {
   rootStore: RootStore
 
-  talkmMore = null
+  talkMore: talkMoreType | null = null
   serverInfo = null
 
   constructor(rootStore: RootStore) {
     makeAutoObservable(this, {}, { autoBind: true });
     makePersistable(this, {
       name: "TalkMoreStore",
-      properties: ["talkmMore", "serverInfo"],
+      properties: ["talkMore", "serverInfo"],
       storage: AsyncStorage
     }).then(action => {
       if (!this.serverInfo) {
@@ -43,9 +61,13 @@ class TalkMoreStore {
     })
     this.setTalkmMore(initSdkData)
     this.getServerInfo(initSdkData)
+
     if (initSdkData.config.apiKey) {
+      // 登录成功
       setTimeout(() => {
         this.rootStore.userStore.setUserConf(initSdkData.config)
+        // 注册事件队列
+        this.rootStore.eventsStore.initMessageQueue()
       }, 0);
     } else if (initSdkData.reslut) {
       throw new Error(initSdkData.reslut.msg);
@@ -53,7 +75,7 @@ class TalkMoreStore {
   }
 
   setTalkmMore(payload: any) {
-    this.talkmMore = payload
+    this.talkMore = payload
   }
 
   setServerInfo(payload: any) {
@@ -61,7 +83,7 @@ class TalkMoreStore {
   }
 
   clean() {
-    this.talkmMore = null
+    this.talkMore = null
     clearPersistedStore(this);
   }
 
