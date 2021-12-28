@@ -45,7 +45,7 @@ const Settings = (props: any) => {
 
   return (
     <View>
-      <Text>Setting</Text>
+      {/* <Text>Setting</Text> */}
 
       <Pressable
         onPress={updateKeyPair}

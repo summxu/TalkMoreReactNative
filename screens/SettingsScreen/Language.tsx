@@ -1,10 +1,15 @@
+/*
+ * @Author: Chenxu
+ * @Date: 2021-12-28 11:20:27
+ * @LastEditTime: 2021-12-28 11:20:27
+ * @Msg: Nothing
+ */
 import TalkMoreStore from "@/stores/talkMore";
 import { t } from "@/translations/translate";
 import { RootStackParamList } from "@/types";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { ChatRoom } from "../src/models";
 
 const styles = StyleSheet.create({
   page: {
@@ -22,7 +27,7 @@ const HomeScreen: React.FC<StackScreenProps<RootStackParamList> & HomeProps> = (
 
   return (
     <View >
-      <Text>{t("common.affirm")}</Text>
+      <Line
     </View> 
   );
 }

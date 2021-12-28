@@ -8,18 +8,21 @@ import UserStore from "./user";
 import TalkMoreStore from "./talkMore";
 import { makeAutoObservable } from "mobx";
 import EventsStore from "./events";
+import LanguageStore from "./language";
 
 class RootStore {
 
   userStore: UserStore
   talkMoreStore: TalkMoreStore
   eventsStore: EventsStore
+  languageStore: LanguageStore
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
     this.userStore = new UserStore(this)
     this.talkMoreStore = new TalkMoreStore(this)
     this.eventsStore = new EventsStore(this)
+    this.languageStore = new LanguageStore()
   }
 
   logOut() {
