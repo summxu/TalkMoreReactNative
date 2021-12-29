@@ -2,6 +2,9 @@
  * Learn more about using TypeScript with React Navigation:
  * https://reactnavigation.org/docs/typescript/
  */
+export type SettingsStackParamList = {
+  SettingsScreen: undefined;
+};
 
 export type RootStackParamList = {
   Root: undefined;
@@ -10,6 +13,7 @@ export type RootStackParamList = {
   ChatRoom: undefined;
   GroupInfoScreen: undefined;
   UsersScreen: undefined;
+  LanguageScreen: undefined;
 };
 
 export type AuthParamList = {

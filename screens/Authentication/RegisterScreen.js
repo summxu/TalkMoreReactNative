@@ -1,4 +1,4 @@
-import { theme } from '@/colors/theme'
+import { inject, observer } from "mobx-react"
 import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native-paper'
@@ -10,13 +10,24 @@ import TextInput from './components/TextInput'
 import { emailValidator } from './helpers/emailValidator'
 import { nameValidator } from './helpers/nameValidator'
 import { passwordValidator } from './helpers/passwordValidator'
-import { inject, observer } from "mobx-react";
 
 const RegisterScreen = ({ navigation, talkMoreStore }) => {
   const [name, setName] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
   const { serverInfo } = talkMoreStore
+  const { colors } = useTheme()
+
+  const styles = StyleSheet.create({
+    row: {
+      flexDirection: 'row',
+      marginTop: 4,
+    },
+    link: {
+      fontWeight: 'bold',
+      color: colors.primary,
+    },
+  })
 
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value)
@@ -85,15 +96,5 @@ const RegisterScreen = ({ navigation, talkMoreStore }) => {
   )
 }
 
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-  },
-})
 
 export default inject('talkMoreStore')(observer(RegisterScreen))

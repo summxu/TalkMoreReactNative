@@ -4,6 +4,7 @@
  *
  */
 import { Dashboard, LoginScreen, RegisterScreen, ResetPasswordScreen, StartScreen } from "@/screens/Authentication";
+import LanguageScreen from "@/screens/SettingsScreen/Language";
 import UserStore from "@/stores/user";
 import { Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -14,7 +15,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import {
-  ColorSchemeName, Image, Pressable, Text, useWindowDimensions, View
+  ColorSchemeName, Pressable, Text, useWindowDimensions, View
 } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
@@ -42,7 +43,7 @@ const Navigation = ({
 
 // A root stack navigator is often used for displaying modals on top of all other content
 // Read more here: https://reactnavigation.org/docs/modal
-const Stack = createStackNavigator<RootStackParamList>();
+export const Stack = createStackNavigator<RootStackParamList>();
 const Auth = createStackNavigator<AuthParamList>();
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -55,6 +56,10 @@ function RootNavigator({ userStore }: NavigationProps) {
           name="BottomTab"
           component={BottomTabNavigator}
           options={{ headerTitle: HomeHeader }}
+        />
+        <Stack.Screen
+          name="LanguageScreen"
+          component={LanguageScreen}
         />
         <Stack.Screen
           name="NotFound"

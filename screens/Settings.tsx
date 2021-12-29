@@ -14,6 +14,10 @@ const Settings = (props: any) => {
     props.userStore.rootStore.logOut()
   };
 
+  const toLanguageScreen = () => {
+    props.navigation.navigate('LanguageScreen')
+  }
+
   const updateKeyPair = async () => {
     // generate private/public key
     const { publicKey, secretKey } = generateKeyPair();
@@ -58,6 +62,19 @@ const Settings = (props: any) => {
         }}
       >
         <Text>Update keypair</Text>
+      </Pressable>
+
+      <Pressable
+        onPress={toLanguageScreen}
+        style={{
+          backgroundColor: "white",
+          height: 50,
+          margin: 10,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text>多语言</Text>
       </Pressable>
 
       <Pressable

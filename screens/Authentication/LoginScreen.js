@@ -1,8 +1,8 @@
-import { theme } from '@/colors/theme'
 import { inject, observer } from "mobx-react"
 import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
+import Toast from 'react-native-root-toast'
 import Background from './components/Background'
 import Button from './components/Button'
 import Header from './components/Header'
@@ -10,13 +10,33 @@ import Logo from './components/Logo'
 import TextInput from './components/TextInput'
 import { emailValidator } from './helpers/emailValidator'
 import { passwordValidator } from './helpers/passwordValidator'
-import Toast from 'react-native-root-toast';
 
 const LoginScreen = ({ navigation, talkMoreStore }) => {
   const [email, setEmail] = useState({ value: 'chenxu4012@foxmail.com', error: '' })
   const [password, setPassword] = useState({ value: '123123.', error: '' })
   const [loading, setLoading] = useState(false)
   const { serverInfo } = talkMoreStore
+  const { colors } = useTheme()
+
+  const styles = useMemo(() => StyleSheet.create({
+    forgotPassword: {
+      width: '100%',
+      alignItems: 'flex-end',
+      marginBottom: 24,
+    },
+    row: {
+      flexDirection: 'row',
+      marginTop: 4,
+    },
+    forgot: {
+      fontSize: 13,
+      color: colors.secondary,
+    },
+    link: {
+      fontWeight: 'bold',
+      color: colors.primary,
+    },
+  }), [])
 
   const initTalkMoreSDK = async () => {
     setLoading(true)
@@ -91,25 +111,5 @@ const LoginScreen = ({ navigation, talkMoreStore }) => {
     </Background>
   )
 }
-
-const styles = StyleSheet.create({
-  forgotPassword: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 24,
-  },
-  row: {
-    flexDirection: 'row',
-    marginTop: 4,
-  },
-  forgot: {
-    fontSize: 13,
-    color: theme.colors.secondary,
-  },
-  link: {
-    fontWeight: 'bold',
-    color: theme.colors.primary,
-  },
-})
 
 export default inject('talkMoreStore')(observer(LoginScreen))
