@@ -6024,6 +6024,11 @@ expo-av@~9.2.3:
     "@expo/config-plugins" "^3.0.0"
     expo-modules-core "~0.2.0"
 
+expo-blur@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.npmjs.org/expo-blur/-/expo-blur-11.0.0.tgz#3542afed5c0037554657d98c31a5933dd78098dd"
+  integrity sha512-EmIYXFwaqvVDhV4JnG9+nENU7FGZkCcuYZhoOOHjnHyADCGNsT6LIVv9/Q/rO0+qWJJxlUG6bziPHC2wbWcC9A==
+
 expo-constants@~11.0.1, expo-constants@~11.0.2:
   version "11.0.2"
   resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-11.0.2.tgz#069930145908fef7d76bf72a1a874a1d4621af82"

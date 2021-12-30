@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:28:17
- * @LastEditTime: 2021-12-30 09:15:46
+ * @LastEditTime: 2021-12-30 17:46:51
  * @Msg: Nothing
  */
 import UserStore from "./user";
@@ -29,6 +29,7 @@ class RootStore {
     this.eventsStore.clean()
     this.userStore.clean()
     this.talkMoreStore.clean()
+    this.settingsStore.setThemeType('light')
   }
 }
 

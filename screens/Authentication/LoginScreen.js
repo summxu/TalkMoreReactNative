@@ -11,7 +11,7 @@ import TextInput from './components/TextInput'
 import { emailValidator } from './helpers/emailValidator'
 import { passwordValidator } from './helpers/passwordValidator'
 
-const LoginScreen = ({ navigation, talkMoreStore }) => {
+const LoginScreen = ({ navigation, talkMoreStore, settingsStore }) => {
   const [email, setEmail] = useState({ value: 'chenxu4012@foxmail.com', error: '' })
   const [password, setPassword] = useState({ value: '123123.', error: '' })
   const [loading, setLoading] = useState(false)
@@ -45,6 +45,7 @@ const LoginScreen = ({ navigation, talkMoreStore }) => {
         username: email.value,
         password: password.value
       })
+      settingsStore.setThemeType('light')
     } catch (error) {
       Toast.show(error.message, {
         duration: Toast.durations.LONG,
@@ -112,4 +113,4 @@ const LoginScreen = ({ navigation, talkMoreStore }) => {
   )
 }
 
-export default inject('talkMoreStore')(observer(LoginScreen))
+export default inject('talkMoreStore', 'settingsStore')(observer(LoginScreen))

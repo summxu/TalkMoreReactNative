@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-28 11:20:27
- * @LastEditTime: 2021-12-30 09:46:04
+ * @LastEditTime: 2021-12-30 14:12:17
  * @Msg: Nothing
  */
 import RootStore from "@/stores";
@@ -20,6 +20,7 @@ const LanguageScreen: React.FC<RootStore> = ({ settingsStore }) => {
       backgroundColor: colors.surface
     }}>
       <RadioButton.Group onValueChange={value => setI18nConfig(value)} value={languageTag}>
+        <RadioButton.Item label="跟随系统" value="auto" />
         <RadioButton.Item label="简体中文" value="zh-CN" />
         <RadioButton.Item label="繁体中文" value="zh-TW" />
         <RadioButton.Item label="English" value="en" />

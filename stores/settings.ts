@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-30 12:26:54
+ * @LastEditTime: 2021-12-30 14:13:51
  * @Msg: Nothing
  */
 import { t } from "@/translations/translate";
@@ -52,7 +52,11 @@ class SettingsStore {
   setI18nConfig = (payload?: string) => {
     const tag = payload || this.languageTag
     if (payload) {
-      this.languageTag = payload
+      if (payload === 'auto') {
+        this.languageTag = tagTrans(Localization.locale)
+      } else {
+        this.languageTag = payload
+      }
     }
     // clear translation cache
     t.cache.clear!();

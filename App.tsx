@@ -12,14 +12,24 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import SettingsStore from "./stores/settings";
+import UserStore from "./stores/user";
 
 interface AppMobxProps {
   settingsStore?: SettingsStore
+  userStore?: UserStore
 }
 
-const AppMobx = inject('settingsStore')(observer(({ settingsStore }: AppMobxProps) => {
+const AppMobx = inject('settingsStore', 'userStore')(observer(({ settingsStore, userStore }: AppMobxProps) => {
   const { languageTag, themeType } = settingsStore!
+  const { userConf } = userStore!
   const colorScheme = useColorScheme();
+
+  const statusBarColorGetter = (): 'dark' | 'light' => {
+    if (!(userConf && userConf.apiKey)) {
+      return 'dark'
+    }
+    return 'light'
+  }
 
   const themeGetter = (payload: "light" | "dark" | "auto") => {
     if (payload === "light") {
@@ -41,6 +51,7 @@ const AppMobx = inject('settingsStore')(observer(({ settingsStore }: AppMobxProp
           <Navigation key={languageTag} theme={themeGetter(themeType)} />
         </RootSiblingParent>
       </ActionSheetProvider>
+      <StatusBar style={statusBarColorGetter()} />
     </PaperProvider>
   )
 }))
@@ -56,7 +67,6 @@ function App() {
         <Provider {...new RootStore()}>
           <AppMobx />
         </Provider>
-        <StatusBar style="dark" />
       </SafeAreaProvider>
     );
   }

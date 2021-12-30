@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-17 12:35:07
- * @LastEditTime: 2021-12-30 12:36:34
+ * @LastEditTime: 2021-12-30 17:00:23
  * @Msg: Nothing
  */
 import {
@@ -14,8 +14,8 @@ import {
 } from 'react-native-paper';
 
 const CustomColors = {
-  primary: '#1890ff',
-  secondary: '#40a9ff',
+  primary: '#3975C6',
+  secondary: '#96b6e0',
 }
 
 export const CombinedDefaultTheme = {
@@ -24,7 +24,10 @@ export const CombinedDefaultTheme = {
   colors: {
     ...PaperDefaultTheme.colors,
     ...NavigationDefaultTheme.colors,
-    ...CustomColors
+    ...CustomColors,
+    background: '#F5F7FA',
+    topBarColor: CustomColors.primary,
+    bottomBarColor: '#FAFBFC'
   },
 };
 
