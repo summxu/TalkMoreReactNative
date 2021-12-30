@@ -1,28 +1,37 @@
+import { CombinedDefaultTheme } from "@/colors/theme";
+import RootStore from "@/stores";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { StatusBar } from "expo-status-bar";
+import { inject, observer, Provider } from "mobx-react";
 import React from "react";
 import "react-native-gesture-handler";
+import { Provider as PaperProvider } from 'react-native-paper';
+import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import { Provider, useLocalObservable } from "mobx-react";
-import RootStore from "@/stores";
-import { Provider as PaperProvider } from 'react-native-paper';
-import { CombinedDefaultTheme } from "@/colors/theme";
-import { RootSiblingParent } from 'react-native-root-siblings';
+import LanguageStore from "./stores/language";
+
+interface AppMobxProps {
+  languageStore?: LanguageStore
+}
+
+const AppMobx = inject('languageStore')(observer(({ languageStore }: AppMobxProps) => {
+  return (
+    <PaperProvider theme={CombinedDefaultTheme}>
+      <ActionSheetProvider>
+        <RootSiblingParent>
+          <Navigation colorScheme={"light"} />
+        </RootSiblingParent>
+      </ActionSheetProvider>
+    </PaperProvider>
+  )
+}))
 
 function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  const store = useLocalObservable(() => ({
-    secondsPassed: 0,
-    increaseTimer() {
-      this.secondsPassed++
-    }
-  }))
-
-  console.log(colorScheme, store)
 
   if (!isLoadingComplete) {
     return null;
@@ -30,15 +39,9 @@ function App() {
     return (
       <SafeAreaProvider>
         <Provider {...new RootStore()}>
-          <PaperProvider theme={CombinedDefaultTheme}>
-            <ActionSheetProvider>
-              <RootSiblingParent>
-                <Navigation colorScheme={"light"} />
-              </RootSiblingParent>
-            </ActionSheetProvider>
-          </PaperProvider>
+          <AppMobx />
         </Provider>
-        <StatusBar />
+        <StatusBar style="dark" />
       </SafeAreaProvider>
     );
   }

@@ -2,11 +2,11 @@ import { inject, observer } from 'mobx-react'
 import React from 'react'
 import { Text } from 'react-native'
 import HTMLView from 'react-native-htmlview'
+import { useTheme } from 'react-native-paper'
 import Background from './components/Background'
 import Button from './components/Button'
 import Header from './components/Header'
 import Logo from './components/Logo'
-import { theme } from "@/colors/theme";
 
 const renderNode = (node, index, siblings, parent, defaultRenderer) => {
   if (node.name == 'p') {
@@ -25,6 +25,7 @@ const renderNode = (node, index, siblings, parent, defaultRenderer) => {
 
 const StartScreen = ({ navigation, talkMoreStore }) => {
   const { serverInfo } = talkMoreStore
+  const { colors } = useTheme()
   return (
     <Background navigation={navigation}>
       {serverInfo && <>
@@ -42,7 +43,7 @@ const StartScreen = ({ navigation, talkMoreStore }) => {
       </Button>
       <Button
         mode="outlined"
-        textColor={theme.colors.text}
+        textColor={colors.text}
         onPress={() => navigation.navigate('RegisterScreen')}
       >
         注册

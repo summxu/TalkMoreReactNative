@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-28 11:12:12
+ * @LastEditTime: 2021-12-29 20:14:13
  * @Msg: Nothing
  */
 import { t } from "@/translations/translate";
@@ -11,6 +11,8 @@ import { makeAutoObservable } from "mobx";
 
 const translationGetters: any = {
   // lazy requires (metro bundler does not support symlinks)
+  'zh-Hans-CN': () => require("@/translations/zh-CN.json"),
+  'zh-Hans-TW': () => require("@/translations/zh-TW.json"),
   'zh-CN': () => require("@/translations/zh-CN.json"),
   'zh-TW': () => require("@/translations/zh-TW.json"),
   en: () => require("@/translations/en.json"),
@@ -30,7 +32,11 @@ class LanguageStore {
     t.cache.clear!();
 
     // set i18n-js config
-    i18n.translations = { [languageTag]: translationGetters[languageTag]() };
+    try {
+      i18n.translations = { [languageTag]: translationGetters[languageTag]() };
+    } catch (error) {
+      this.setI18nConfig('en')
+    }
     i18n.locale = languageTag
 
   };

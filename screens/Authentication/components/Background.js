@@ -5,7 +5,7 @@ import { useTheme } from 'react-native-paper';
 import BackButton from "./BackButton";
 
 export default function Background ({ children, navigation }) {
-  const { colors } = useTheme
+  const { colors } = useTheme()
   
   const styles = StyleSheet.create({
     background: {
