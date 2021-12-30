@@ -1,6 +1,6 @@
 import TalkMoreStore from "@/stores/talkMore";
 import { t } from "@/translations/translate";
-import { RootStackParamList } from "@/types";
+import { RootStackParamList } from "@/types/navigatorTypes";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";

@@ -1,7 +1,7 @@
 import { inject, observer } from "mobx-react"
 import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, useTheme } from 'react-native-paper'
 import Background from './components/Background'
 import Button from './components/Button'
 import Header from './components/Header'

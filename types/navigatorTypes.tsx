@@ -14,6 +14,7 @@ export type RootStackParamList = {
   GroupInfoScreen: undefined;
   UsersScreen: undefined;
   LanguageScreen: undefined;
+  DarkModeScreen: undefined;
 };
 
 export type AuthParamList = {

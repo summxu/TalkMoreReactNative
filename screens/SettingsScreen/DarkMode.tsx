@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-28 11:20:27
- * @LastEditTime: 2021-12-30 09:46:04
+ * @LastEditTime: 2021-12-30 12:32:51
  * @Msg: Nothing
  */
 import RootStore from "@/stores";
@@ -10,8 +10,8 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { RadioButton, useTheme } from "react-native-paper";
 
-const LanguageScreen: React.FC<RootStore> = ({ settingsStore }) => {
-  const { languageTag, setI18nConfig } = settingsStore
+const DarkModeScreen: React.FC<RootStore> = ({ settingsStore }) => {
+  const { themeType, setThemeType } = settingsStore
   const { colors } = useTheme()
 
   return (
@@ -19,10 +19,10 @@ const LanguageScreen: React.FC<RootStore> = ({ settingsStore }) => {
       ...styles.container,
       backgroundColor: colors.surface
     }}>
-      <RadioButton.Group onValueChange={value => setI18nConfig(value)} value={languageTag}>
-        <RadioButton.Item label="简体中文" value="zh-CN" />
-        <RadioButton.Item label="繁体中文" value="zh-TW" />
-        <RadioButton.Item label="English" value="en" />
+      <RadioButton.Group onValueChange={(value: any) => setThemeType(value)} value={themeType}>
+        <RadioButton.Item label="跟随系统" value="auto" />
+        <RadioButton.Item label="正常模式" value="light" />
+        <RadioButton.Item label="暗黑模式" value="dark" />
       </RadioButton.Group>
     </View>
   );
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default inject('settingsStore')(observer(LanguageScreen))
+export default inject('settingsStore')(observer(DarkModeScreen))

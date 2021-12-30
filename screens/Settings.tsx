@@ -5,6 +5,7 @@ import { generateKeyPair } from "../utils/crypto";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { User as UserModel } from "../src/models";
 import { inject, observer } from "mobx-react";
+import { t } from "@/translations/translate";
 
 export const PRIVATE_KEY = "PRIVATE_KEY";
 
@@ -74,7 +75,20 @@ const Settings = (props: any) => {
           justifyContent: "center",
         }}
       >
-        <Text>多语言</Text>
+        <Text>{t("settings.languageText")}</Text>
+      </Pressable>
+
+      <Pressable
+        onPress={() => props.navigation.navigate('DarkModeScreen')}
+        style={{
+          backgroundColor: "white",
+          height: 50,
+          margin: 10,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Text>{t("settings.darkModeText")}</Text>
       </Pressable>
 
       <Pressable

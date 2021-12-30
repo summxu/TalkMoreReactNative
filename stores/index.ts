@@ -1,28 +1,28 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:28:17
- * @LastEditTime: 2021-12-22 11:28:27
+ * @LastEditTime: 2021-12-30 09:15:46
  * @Msg: Nothing
  */
 import UserStore from "./user";
 import TalkMoreStore from "./talkMore";
 import { makeAutoObservable } from "mobx";
 import EventsStore from "./events";
-import LanguageStore from "./language";
+import SettingsStore from "./settings";
 
 class RootStore {
 
   userStore: UserStore
   talkMoreStore: TalkMoreStore
   eventsStore: EventsStore
-  languageStore: LanguageStore
+  settingsStore: SettingsStore
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
     this.userStore = new UserStore(this)
     this.talkMoreStore = new TalkMoreStore(this)
     this.eventsStore = new EventsStore(this)
-    this.languageStore = new LanguageStore()
+    this.settingsStore = new SettingsStore()
   }
 
   logOut() {

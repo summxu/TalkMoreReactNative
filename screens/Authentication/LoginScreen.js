@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation, talkMoreStore }) => {
   const { serverInfo } = talkMoreStore
   const { colors } = useTheme()
 
-  const styles = useMemo(() => StyleSheet.create({
+  const styles = StyleSheet.create({
     forgotPassword: {
       width: '100%',
       alignItems: 'flex-end',
@@ -36,7 +36,7 @@ const LoginScreen = ({ navigation, talkMoreStore }) => {
       fontWeight: 'bold',
       color: colors.primary,
     },
-  }), [])
+  })
 
   const initTalkMoreSDK = async () => {
     setLoading(true)

@@ -1,12 +1,12 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-21 14:16:15
+ * @LastEditTime: 2021-12-30 09:21:26
  * @Msg: Nothing
  */
-import { action, makeAutoObservable } from "mobx";
-import { clearPersistedStore, makePersistable } from "mobx-persist-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { makeAutoObservable } from "mobx";
+import { clearPersistedStore, makePersistable } from "mobx-persist-store";
 import RootStore from "./index";
 
 export type userConfType = {

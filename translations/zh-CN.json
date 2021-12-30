@@ -1,7 +1,10 @@
 {
-  "test": "ennn?",
   "common": {
     "affirm": "确认",
     "cancel": "取消"
+  },
+  "settings": {
+    "languageText": "多语言",
+    "darkModeText": "暗黑模式"
   }
 }

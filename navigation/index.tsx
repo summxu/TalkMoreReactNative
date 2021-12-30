@@ -4,38 +4,29 @@
  *
  */
 import { Dashboard, LoginScreen, RegisterScreen, ResetPasswordScreen, StartScreen } from "@/screens/Authentication";
+import DarkModeScreen from "@/screens/SettingsScreen/DarkMode";
 import LanguageScreen from "@/screens/SettingsScreen/Language";
 import UserStore from "@/stores/user";
 import { Feather } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  DarkTheme, DefaultTheme, NavigationContainer, useNavigation
-} from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
-import {
-  ColorSchemeName, Pressable, Text, useWindowDimensions, View
-} from "react-native";
+import { Pressable, Text, useWindowDimensions, View } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import SettingsScreen from "../screens/Settings";
-import { AuthParamList, BottomTabParamList, RootStackParamList } from "../types";
+import { AuthParamList, BottomTabParamList, RootStackParamList } from "../types/navigatorTypes";
 
 interface NavigationProps {
   userStore?: UserStore
 }
 
-const Navigation = ({
-  colorScheme
-}: {
-  colorScheme: ColorSchemeName;
-}) => {
+const Navigation = (props: any) => {
 
   return (
-    <NavigationContainer
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-    >
+    <NavigationContainer {...props}>
       <RootNavigatorMobx />
     </NavigationContainer>
   );
@@ -60,6 +51,10 @@ function RootNavigator({ userStore }: NavigationProps) {
         <Stack.Screen
           name="LanguageScreen"
           component={LanguageScreen}
+        />
+        <Stack.Screen
+          name="DarkModeScreen"
+          component={DarkModeScreen}
         />
         <Stack.Screen
           name="NotFound"

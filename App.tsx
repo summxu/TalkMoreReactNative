@@ -1,9 +1,9 @@
-import { CombinedDefaultTheme } from "@/colors/theme";
+import { CombinedDarkTheme, CombinedDefaultTheme } from "@/colors/theme";
 import RootStore from "@/stores";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { StatusBar } from "expo-status-bar";
 import { inject, observer, Provider } from "mobx-react";
-import React from "react";
+import React, { useEffect } from "react";
 import "react-native-gesture-handler";
 import { Provider as PaperProvider } from 'react-native-paper';
 import { RootSiblingParent } from 'react-native-root-siblings';
@@ -11,18 +11,34 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
-import LanguageStore from "./stores/language";
+import SettingsStore from "./stores/settings";
 
 interface AppMobxProps {
-  languageStore?: LanguageStore
+  settingsStore?: SettingsStore
 }
 
-const AppMobx = inject('languageStore')(observer(({ languageStore }: AppMobxProps) => {
+const AppMobx = inject('settingsStore')(observer(({ settingsStore }: AppMobxProps) => {
+  const { languageTag, themeType } = settingsStore!
+  const colorScheme = useColorScheme();
+
+  const themeGetter = (payload: "light" | "dark" | "auto") => {
+    if (payload === "light") {
+      return CombinedDefaultTheme
+    }
+    if (payload === "dark") {
+      return CombinedDarkTheme
+    }
+    if (payload === "auto") {
+      themeGetter(colorScheme)
+    }
+    return CombinedDefaultTheme
+  }
+
   return (
-    <PaperProvider theme={CombinedDefaultTheme}>
+    <PaperProvider theme={themeGetter(themeType)}>
       <ActionSheetProvider>
         <RootSiblingParent>
-          <Navigation colorScheme={"light"} />
+          <Navigation key={languageTag} theme={themeGetter(themeType)} />
         </RootSiblingParent>
       </ActionSheetProvider>
     </PaperProvider>
@@ -31,7 +47,6 @@ const AppMobx = inject('languageStore')(observer(({ languageStore }: AppMobxProp
 
 function App() {
   const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
     return null;
