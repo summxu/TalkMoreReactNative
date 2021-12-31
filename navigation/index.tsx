@@ -10,10 +10,10 @@ import UserStore from "@/stores/user";
 import { Fontisto, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { CardStyleInterpolators, createStackNavigator, HeaderStyleInterpolators, TransitionPresets, TransitionSpecs } from "@react-navigation/stack";
+import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
-import { Animated, View } from "react-native";
+import { View } from "react-native";
 import { useTheme } from "react-native-paper";
 import HomeScreen from "../screens/HomeScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
@@ -37,8 +37,9 @@ const screenOptions: any = {
   headerBackTitleVisible: false,
   headerTitleAlign: 'center',
   headerTintColor: 'white',
+  detachPreviousScreen: false, // 修复导航栏动画左侧白边
   headerBackImage: ({ tintColor }: { tintColor: string }) =>
-    <Ionicons name="ios-chevron-back" size={24} color={tintColor} />,
+    <Ionicons name="ios-chevron-back" size={26} color={tintColor} />,
   ...TransitionPresets.SlideFromRightIOS
 }
 
