@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-24 17:04:36
+ * @LastEditTime: 2021-12-31 14:05:25
  * @Msg: Nothing
  */
 import { makeAutoObservable } from "mobx";
@@ -17,12 +17,13 @@ class EventsStore {
     this.rootStore = rootStore
   }
 
-  initMessageQueue() {
+  async initMessageQueue() {
     const { talkMore } = this.rootStore.talkMoreStore
     if (talkMore) {
-      talkMore.callOnEachEvent((event: any) => {
+      const res = await talkMore.callOnEachEvent((event: any) => {
         console.log(event)
       }, ['message']);
+      console.log(res)
     }
   }
 

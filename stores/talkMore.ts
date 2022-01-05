@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-16 16:25:22
- * @LastEditTime: 2021-12-22 12:14:22
+ * @LastEditTime: 2021-12-31 14:21:06
  * @Msg: Nothing
  */
 import TalkMore from "@/lib/index.js";
@@ -43,6 +43,7 @@ class TalkMoreStore {
       storage: AsyncStorage
     }).then(action => {
       if (!this.serverInfo) {
+        // 没有拉到持久化中的SDK，初始化一个空的（未登录的）
         this.initTalkMoreSDK({})
       }
     })
@@ -54,13 +55,16 @@ class TalkMoreStore {
     this.setServerInfo(serverRes)
   }
 
+  // 初始化SDK（可以是未登录的，也可以是已登录的）
   async initTalkMoreSDK(options: any) {
+
+    console.log(options)
     const initSdkData = await TalkMore({
       ...options,
       realm: TalkmoreRC.realm
     })
     this.setTalkmMore(initSdkData)
-    this.getServerInfo(initSdkData)
+    this.getServerInfo(initSdkData) // 不需要登录权限
 
     if (initSdkData.config.apiKey) {
       // 登录成功

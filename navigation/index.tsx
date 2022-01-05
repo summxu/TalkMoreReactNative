@@ -10,7 +10,7 @@ import UserStore from "@/stores/user";
 import { Fontisto, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator, TransitionPresets } from "@react-navigation/stack";
+import { createStackNavigator, HeaderStyleInterpolators, TransitionPresets } from "@react-navigation/stack";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { View } from "react-native";
@@ -33,6 +33,18 @@ const Navigation = (props: any) => {
   );
 }
 
+function forCustomHeaderAnimation(options: any) {
+  const { progress } = options.current;
+  const styles = HeaderStyleInterpolators.forUIKit(options);
+
+  return {
+    ...styles,
+    leftButtonStyle: { opacity: progress },
+    leftLabelStyle: {},
+    rightButtonStyle: { opacity: progress },
+  };
+}
+
 const screenOptions: any = {
   headerBackTitleVisible: false,
   headerTitleAlign: 'center',
@@ -40,7 +52,8 @@ const screenOptions: any = {
   detachPreviousScreen: false, // 修复导航栏动画左侧白边
   headerBackImage: ({ tintColor }: { tintColor: string }) =>
     <Ionicons name="ios-chevron-back" size={26} color={tintColor} />,
-  ...TransitionPresets.SlideFromRightIOS
+  ...TransitionPresets.SlideFromRightIOS,
+  headerStyleInterpolator: forCustomHeaderAnimation
 }
 
 // A root stack navigator is often used for displaying modals on top of all other content
@@ -62,15 +75,13 @@ function RootNavigator({ userStore }: NavigationProps) {
     !(userConf && userConf.apiKey) ? <AuthNavigator /> :
       <Stack.Navigator
         screenOptions={{
+          gestureEnabled: true,
           ...screenOptions,
           headerStyle: {
             backgroundColor: colors.topBarColor
           }
         }}>
         <Stack.Screen
-          options={{
-            headerShown: false,
-          }}
           name="BottomTab"
           component={BottomTabNavigator}
         />
@@ -124,6 +135,7 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       screenOptions={{
         ...screenOptions,
+        headerShown: false,
         tabBarBackground: () => (
           <View style={{ flex: 1, backgroundColor: colors.bottomBarColor }}></View>
         ),

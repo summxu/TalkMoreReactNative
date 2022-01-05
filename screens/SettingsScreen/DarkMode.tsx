@@ -1,16 +1,18 @@
 /*
  * @Author: Chenxu
  * @Date: 2021-12-28 11:20:27
- * @LastEditTime: 2021-12-30 12:32:51
+ * @LastEditTime: 2022-01-05 09:30:54
  * @Msg: Nothing
  */
 import RootStore from "@/stores";
+import { RootStackParamList } from "@/types/navigatorTypes";
+import { StackScreenProps } from "@react-navigation/stack";
 import { inject, observer } from "mobx-react";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { RadioButton, useTheme } from "react-native-paper";
+import { Button, RadioButton, useTheme } from "react-native-paper";
 
-const DarkModeScreen: React.FC<RootStore> = ({ settingsStore }) => {
+const DarkModeScreen: React.FC<StackScreenProps<RootStackParamList> & RootStore> = ({ settingsStore, navigation }) => {
   const { themeType, setThemeType } = settingsStore
   const { colors } = useTheme()
 
@@ -24,6 +26,8 @@ const DarkModeScreen: React.FC<RootStore> = ({ settingsStore }) => {
         <RadioButton.Item label="正常模式" value="light" />
         <RadioButton.Item label="暗黑模式" value="dark" />
       </RadioButton.Group>
+
+      <Button onPress={() => navigation.navigate('LanguageScreen')}>跳转</Button>
     </View>
   );
 }
